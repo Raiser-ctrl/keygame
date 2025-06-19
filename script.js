@@ -4,9 +4,11 @@ let correctDoor = 0;
 let timeLeft = 60;
 let timerInterval;
 let hearts = 3;
+let heartUsed = false;
 
 const clickSound = document.getElementById("clickSound");
 const winSound = document.getElementById("winSound");
+const healSound = document.getElementById("healSound");
 
 function switchScreen(from, to) {
   document.getElementById(from).classList.remove("active");
@@ -17,7 +19,7 @@ function startGame() {
   level = 1;
   timeLeft = 60;
   hearts = 3;
-  heartUsed = false; // reset pemakaian nyawa
+  heartUsed = false;
   switchScreen("screen_intro", "screen_game");
   setupLevel(level);
   updateHearts();
@@ -86,10 +88,14 @@ function handleClick(num, ctx) {
   if (num === correctDoor) {
     drawKey(ctx);
     document.getElementById("resultText").innerText = "✅ Correct!";
+
+    if (hearts < 3) hearts++;
+
     if (level < maxLevel) {
       level++;
       setTimeout(() => {
         setupLevel(level);
+        updateHearts();
         document.getElementById("resultText").innerText = "";
       }, 700);
     } else {
@@ -130,33 +136,10 @@ function updateHearts() {
   const heartDisplay = document.getElementById("hearts");
   heartDisplay.innerText = "❤️".repeat(hearts) + "🖤".repeat(3 - hearts);
 }
-if (num === correctDoor) {
-  drawKey(ctx);
-  document.getElementById("resultText").innerText = "✅ Correct!";
-  
-  // Tambahkan nyawa setiap naik level (maksimal 3)
-  if (hearts < 3) hearts++;
-
-  if (level < maxLevel) {
-    level++;
-    setTimeout(() => {
-      setupLevel(level);
-      updateHearts();
-      document.getElementById("resultText").innerText = "";
-    }, 700);
-  } else {
-    clearInterval(timerInterval);
-    winSound.play();
-    showResetButton();
-  }
-}
-
-let heartUsed = false;
 
 function addHeart() {
   const result = document.getElementById("resultText");
   const blood = document.getElementById("bloodEffect");
-  const healSound = document.getElementById("healSound");
 
   if (heartUsed) {
     result.innerText = "❌ Kamu sudah pakai tambahan nyawa.";
@@ -167,7 +150,6 @@ function addHeart() {
     result.innerText = "❤️ Nyawa ditambah!";
     healSound.play();
 
-    // Animasi darah/healing
     blood.innerText = "💉+1";
     blood.style.display = "block";
     setTimeout(() => {
@@ -182,7 +164,6 @@ function addHeart() {
   }, 1500);
 }
 
-
 function endGame(won) {
   if (!won) {
     document.body.innerHTML = `
@@ -190,28 +171,27 @@ function endGame(won) {
         <img src="assets/jumpscare.jpg" style="max-width:100%;height:auto;animation:shake 0.5s infinite;">
         <h1 style="font-size:48px;margin-top:20px;">ARGHHHH!!</h1>
         <audio src="assets/scream.mp3" autoplay></audio>
-    <button onclick="location.reload()" style="
-  margin-top: 25px;
-  padding: 15px 40px;
-  font-size: 24px;
-  background: linear-gradient(135deg, #ff1744, #d50000);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  box-shadow: 0 0 20px rgba(255, 23, 68, 0.6);
-  cursor: pointer;
-  font-weight: bold;
-  letter-spacing: 1px;
-  transition: transform 0.3s ease;
-"
-onmouseover="this.style.transform='scale(1.1)'"
-onmouseout="this.style.transform='scale(1)'"
->🔁 Main Lagi</button>
-
+        <button onclick="location.reload()" style="
+          margin-top: 25px;
+          padding: 15px 40px;
+          font-size: 24px;
+          background: linear-gradient(135deg, #ff1744, #d50000);
+          color: white;
+          border: none;
+          border-radius: 50px;
+          box-shadow: 0 0 20px rgba(255, 23, 68, 0.6);
+          cursor: pointer;
+          font-weight: bold;
+          letter-spacing: 1px;
+          transition: transform 0.3s ease;
+        "
+        onmouseover="this.style.transform='scale(1.1)'"
+        onmouseout="this.style.transform='scale(1)'"
+        >🔁 Main Lagi</button>
+      </div>
     `;
   }
 }
-
 
 function showResetButton() {
   document.getElementById("screen_game").innerHTML = `
