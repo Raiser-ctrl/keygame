@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Find the Key</title>
+
+  <!-- Styles -->
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #fbe9e7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .screen {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .start-button {
+      background: linear-gradient(135deg, #ff6f61, #d84315);
+      color: #fff;
+      border: none;
+      font-size: 22px;
+      padding: 15px 35px;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .start-button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #ff8a65, #ff7043);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    #doors {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    #timer {
+      font-size: 24px;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    #resultText {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+
+    #finalMessage {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      font-size: 18px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    #shareLink {
+      background: #f1f1f1;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0px, 0px); }
+      20% { transform: translate(5px, -5px); }
+      40% { transform: translate(-5px, 5px); }
+      60% { transform: translate(5px, 5px); }
+      80% { transform: translate(-5px, -5px); }
+      100% { transform: translate(0px, 0px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔷 Intro Screen -->
+  <div id="screen_intro" class="screen active">
+    <h1>🔐 Find the Key!</h1>
+    <p>Pick the correct door in each level. Be fast, time is ticking!</p>
+    <button class="start-button" onclick="startGame()">Start Game</button>
+  </div>
+
+  <!-- 🔷 Game Screen -->
+  <div id="screen_game" class="screen">
+    <div id="timer">Time left: 60s</div>
+    <div id="resultText"></div>
+    <div id="hearts" style="font-size: 28px; margin-bottom: 10px;">❤️❤️❤️</div>
+<div id="resultText"></div>
+
+    <div id="doors"></div>
+  </div>
+
+  <!-- 🔷 End Screen -->
+  <div id="screen_end" class="screen">
+    <div id="finalMessage">You Win!</div>
+
+    
+  <!-- 🔊 Sound Elements -->
+  <audio id="clickSound" src="assets/click.mp3" preload="auto"></audio>
+  <audio id="winSound" src="assets/win.mp3" preload="auto"></audio>
+  <audio id="loseSound" src="assets/lose.mp3" preload="auto"></audio>
+  
+
+  <!-- 🔗 Script -->
+  <script src="script.js"></script>
+</body>
+</html>
