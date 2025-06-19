@@ -127,7 +127,43 @@ function drawWrong(ctx) {
 
 function updateHearts() {
   const heartDisplay = document.getElementById("hearts");
-  heartDisplay.innerText = "❤️".repeat(hearts) + "🖤".repeat(6 - hearts);
+  heartDisplay.innerText = "❤️".repeat(hearts) + "🖤".repeat(3 - hearts);
+}
+if (num === correctDoor) {
+  drawKey(ctx);
+  document.getElementById("resultText").innerText = "✅ Correct!";
+  
+  // Tambahkan nyawa setiap naik level (maksimal 3)
+  if (hearts < 3) hearts++;
+
+  if (level < maxLevel) {
+    level++;
+    setTimeout(() => {
+      setupLevel(level);
+      updateHearts();
+      document.getElementById("resultText").innerText = "";
+    }, 700);
+  } else {
+    clearInterval(timerInterval);
+    winSound.play();
+    showResetButton();
+  }
+}
+
+function addHeart() {
+  if (hearts < 3) {
+    hearts++;
+    updateHearts();
+    document.getElementById("resultText").innerText = "❤️ Nyawa ditambah!";
+    setTimeout(() => {
+      document.getElementById("resultText").innerText = "";
+    }, 1000);
+  } else {
+    document.getElementById("resultText").innerText = "❤️ Nyawa sudah penuh!";
+    setTimeout(() => {
+      document.getElementById("resultText").innerText = "";
+    }, 1000);
+  }
 }
 
 function endGame(won) {
