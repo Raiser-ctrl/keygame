@@ -17,6 +17,7 @@ function startGame() {
   level = 1;
   timeLeft = 60;
   hearts = 3;
+  heartUsed = false; // reset pemakaian nyawa
   switchScreen("screen_intro", "screen_game");
   setupLevel(level);
   updateHearts();
@@ -150,21 +151,37 @@ if (num === correctDoor) {
   }
 }
 
+let heartUsed = false;
+
 function addHeart() {
-  if (hearts < 3) {
+  const result = document.getElementById("resultText");
+  const blood = document.getElementById("bloodEffect");
+  const healSound = document.getElementById("healSound");
+
+  if (heartUsed) {
+    result.innerText = "❌ Kamu sudah pakai tambahan nyawa.";
+  } else if (hearts < 3) {
     hearts++;
+    heartUsed = true;
     updateHearts();
-    document.getElementById("resultText").innerText = "❤️ Nyawa ditambah!";
+    result.innerText = "❤️ Nyawa ditambah!";
+    healSound.play();
+
+    // Animasi darah/healing
+    blood.innerText = "💉+1";
+    blood.style.display = "block";
     setTimeout(() => {
-      document.getElementById("resultText").innerText = "";
-    }, 1000);
+      blood.style.display = "none";
+    }, 800);
   } else {
-    document.getElementById("resultText").innerText = "❤️ Nyawa sudah penuh!";
-    setTimeout(() => {
-      document.getElementById("resultText").innerText = "";
-    }, 1000);
+    result.innerText = "❤️ Nyawa sudah penuh!";
   }
+
+  setTimeout(() => {
+    result.innerText = "";
+  }, 1500);
 }
+
 
 function endGame(won) {
   if (!won) {
