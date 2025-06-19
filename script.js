@@ -127,7 +127,7 @@ function drawWrong(ctx) {
 
 function updateHearts() {
   const heartDisplay = document.getElementById("hearts");
-  heartDisplay.innerText = "❤️".repeat(hearts) + "🖤".repeat(3 - hearts);
+  heartDisplay.innerText = "❤️".repeat(hearts) + "🖤".repeat(6 - hearts);
 }
 
 function endGame(won) {
