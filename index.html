@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Find the Key</title>
 
-  <!-- Styles -->
   <style>
     body {
       margin: 0;
@@ -73,17 +72,23 @@
       margin-bottom: 20px;
     }
 
-    input[type="text"] {
-      padding: 10px;
-      width: 80%;
-      font-size: 18px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
+    #hearts {
+      font-size: 28px;
       margin-bottom: 10px;
     }
 
-    #shareLink {
-      background: #f1f1f1;
+    #bloodEffect {
+      display: none;
+      font-size: 50px;
+      color: #ff1744;
+      margin-top: 10px;
+      animation: bloodPop 0.5s;
+    }
+
+    @keyframes bloodPop {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 0; }
     }
 
     @keyframes shake {
@@ -109,44 +114,41 @@
   <div id="screen_game" class="screen">
     <div id="timer">Time left: 60s</div>
     <div id="resultText"></div>
-    <div id="hearts" style="font-size: 28px; margin-bottom: 10px;">❤️❤️❤️</div>
+    <div id="hearts">❤️❤️❤️</div>
+
     <button onclick="addHeart()" id="addHeartBtn" style="
-  margin-top: 15px;
-  padding: 12px 30px;
-  font-size: 20px;
-  background: linear-gradient(135deg, #ff5252, #ff1744);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  box-shadow: 0 0 15px rgba(255, 82, 82, 0.6);
-  font-weight: bold;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-"
-onmouseover="this.style.transform='scale(1.1)'"
-onmouseout="this.style.transform='scale(1)'"
->➕ Tambah Nyawa</button>
+      margin-top: 15px;
+      padding: 12px 30px;
+      font-size: 20px;
+      background: linear-gradient(135deg, #ff5252, #ff1744);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      box-shadow: 0 0 15px rgba(255, 82, 82, 0.6);
+      font-weight: bold;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;"
+      onmouseover="this.style.transform='scale(1.1)'"
+      onmouseout="this.style.transform='scale(1)'"
+    >➕ Tambah Nyawa</button>
 
-<div id="resultText"></div>
-
+    <div id="bloodEffect">💉+1</div>
     <div id="doors"></div>
   </div>
 
-  <!-- 🔷 End Screen -->
+  <!-- 🔷 End Screen (Diganti dari JS kalau kalah) -->
   <div id="screen_end" class="screen">
     <div id="finalMessage">You Win!</div>
+  </div>
 
-    
   <!-- 🔊 Sound Elements -->
   <audio id="clickSound" src="assets/click.mp3" preload="auto"></audio>
   <audio id="winSound" src="assets/win.mp3" preload="auto"></audio>
   <audio id="loseSound" src="assets/lose.mp3" preload="auto"></audio>
   <audio id="healSound" src="assets/heal.mp3" preload="auto"></audio>
 
-  
-
-  <!-- 🔗 Script -->
+  <!-- 🔗 Game Script -->
   <script src="script.js"></script>
 </body>
 </html>
